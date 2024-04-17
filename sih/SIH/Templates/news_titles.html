@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
+    <style>
+      body{
+        background-color: aliceblue;
+      }
+      .accordion{
+        border-radius: 15px;
+        box-shadow: 0 2px 5px 0;
+        /* transition: all 0.3s; */
+    }
+    .accordion-item{
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px 0;
+      
+    }
+    .accordion-item:hover{
+      transform: scale(1.01);
+    }
+
+    .hi {
+      position: relative;
+    }
+
+    .hi::after {
+      content: '';
+      opacity: 0;
+      transition: all 0.2s;
+      height: 2px;
+      width: 100%;
+      background-color: rgb(57, 255, 215);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .hi:hover::after {
+      opacity: 1;
+    }
+
+    .hello:hover {
+      color: rgb(57, 255, 215);
+    }
+    .hide{
+      display: none;
+    }
+    .yolo{
+      font-family: "Audiowide", sans-serif;
+    }
+    /* .accordion-button{
+      background-color: rgb(94, 91, 118);
+      color: aliceblue;
+      position: relative;
+
+    }
+    .accordion-button:active, .accordion-button:focus{
+
+    }
+    .accordion-button:hover{
+      background: rgb(191, 179, 246);
+
+    } */
+    .btn-primary:hover {
+      background-color: #007BFF;
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- NAV BAR -->
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand yolo" href="#" style="color: rgb(57, 255, 215);">SIH</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link hi" aria-current="page" href="{{ url_for('front') }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active hi" href="/index.html"><b>News</b></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle hello" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <!-- NAVBAR ENDS -->
+
+      <br>
+    <div class="container">
+        <div class="accordion " id="accordionPanelsStayOpenExample">
+            {% for news_item in news_data %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ news_item.title|replace_special_characters }}" aria-expanded="false" aria-controls="{{ news_item.title|replace_special_characters}}">
+                       <b> {{ news_item.title }} </b>
+                    </button>
+                </h2>
+                <div id="{{ news_item.title|replace_special_characters }}" class="accordion-collapse collapse">
+                    <div class="accordion-body post">
+                        <p class="content">
+                           {{ news_item.description }} 
+                            
+                        </p>
+                        <div class="btn btn-info" onclick="readMore(this)">Read More</div>
+                        <div class="accordion-footer" >
+                        <a href="{{news_item.link}}"  target="_blank" class="btn btn-primary btn-sm">Link to the full news  <span class="badge bg-dark ml-2">✈️</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+      let noOfCharac = 300;
+      let contents = document.querySelectorAll(".content");
+      contents.forEach(content => {
+          // if text length is less than noOfCharac then hide read more button
+          if (content.textContent.length < noOfCharac) {
+              content.nextElementSibling.style.display = "none";
+          } else {
+              let displayText = content.textContent.slice(0, noOfCharac);
+              let moreText = content.textContent.slice(noOfCharac);
+              content.innerHTML = `${displayText}<span class="dots">...</span><span class="hide more">${moreText}</span>`;
+          }
+      });
+
+      function readMore(btn) {
+          let post = btn.parentElement;
+          post.querySelector(".dots").classList.toggle("hide");
+          post.querySelector(".more").classList.toggle("hide");
+          btn.textContent == "Read More" ? btn.textContent = "Show Less" : btn.textContent = "Read More";
+      }
+  </script>
+  </body>
+</html>

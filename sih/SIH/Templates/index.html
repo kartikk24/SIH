@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
+    <style>
+        .container {
+            width: 790px;
+            align-items: center;
+            align-self: center;
+            align-content: center;
+            text-align: center;
+        }
+
+        .card {
+            border-radius: 25px;
+            box-shadow: 0 2px 5px 0;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            background-color: rgb(251, 251, 251);
+            
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+        }
+        /* Add this CSS to your existing styles */
+        .btn-arrow {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.card:hover .btn-arrow {
+    transform: translateY(0);
+    opacity: 1;
+}
+.dropdown-menu {
+      transition: all 0.3s;
+    }
+
+    .dropdown-menu:hover {
+      transform: scale(1.05);
+    }
+
+    .hi {
+      position: relative;
+    }
+
+    .hi::after {
+      content: '';
+      opacity: 0;
+      transition: all 0.2s;
+      height: 2px;
+      width: 100%;
+      background-color: rgb(57, 255, 215);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .hi:hover::after {
+      opacity: 1;
+    }
+
+    .hello:hover {
+      color: rgb(57, 255, 215);
+    }
+
+    body {
+        background-color: aliceblue;
+    }
+    .yolo{
+      font-family: "Audiowide", sans-serif;
+    }
+    .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    .fixed-height-card {
+            height: 100%; /* Add a fixed height here */
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand yolo" href="#" style="color:rgb(57, 255, 215) ;">SIH</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link hi" aria-current="page" href="{{ url_for('front') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active hi" href="#"><b>News</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link hi" href="{{ url_for('front') }}#about">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle hello" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item " href="#">About</a></li>
+              <li><a class="dropdown-item" href="#">Contact us</a></li>
+             
+              <li><a class="dropdown-item" href="#">States</a></li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              </li> -->
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<br>
+<!-- CARDS -->
+<div class="container text-center" style="padding: 40px;">
+    <div class="row card-container">
+        <div class="col-sm-6 mb-3 mb-sm-0 border-primary">
+            <form class="card-form" method="POST" action="{{ url_for('index') }}">
+                <div class="card fixed-height-card" style="width: 18rem;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Ministry_of_Agriculture_India.svg/1200px-Ministry_of_Agriculture_India.svg.png" class="card-img-top" alt="..." style="border-radius: 15px; padding: 10px;">
+                    <div class="card-body">
+                        <input type="hidden" name="ministry" value="Ministry of Agriculture and Farmers Welfare">
+                        <h5 class="card-title">Ministry of Agriculture and Farmers Welfare</h5>
+                        <p class="card-text">It is a branch of the Government of India and the apex body for formulation and administration of the rules and regulations and laws related to agriculture in India.</p>
+                        <select name="sentiment" class="btn btn-dark" >
+                            <option value="" disabled selected hidden>News Type</option>
+                            <option value="positive">Positive</option>
+                            <option value="negative">Negative</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                        <button type="submit" class="btn-arrow"><i class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Second Card -->
+        <div class="col-sm-6 mb-3 mb-sm-0 border-primary">
+            <form class="card-form" method="POST" action="{{ url_for('index') }}">
+                <div class="card fixed-height-card" style="width: 18rem;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Ministry_of_Jal_Shakti.svg/1200px-Ministry_of_Jal_Shakti.svg.png " class="card-img-top" alt="..." style="border-radius: 15px; width: 280px; padding: 10px;">
+                    <div class="card-body">
+                        <input type="hidden" name="ministry" value="Ministry of Water Resources">
+                        <h5 class="card-title">Ministry of Water Resources</h5>
+                        <p class="card-text">This Department is mainly responsible for laying down policy guidelines for the development, conservation and management of water as a national resource.</p>
+                        <select name="sentiment" class="btn btn-dark">
+                            <option value="" disabled selected hidden>News Type</option>
+                            <option value="positive">Positive</option>
+                            <option value="negative">Negative</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                        
+                        
+                        <button type="submit" class="btn-arrow"><i class="fas fa-arrow-circle-right"></i></button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Third Card -->
+        <div class="col-sm-6">
+            <form class="card-form" method="POST" action="{{ url_for('index') }}">
+                <div class="card fixed-height-card" style="width: 18rem;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Ministry_of_Finance_India.svg/1200px-Ministry_of_Finance_India.svg.png" class="card-img-top" alt="..." style="border-radius: 15px; padding: 10px;">
+                    <div class="card-body">
+                        <input type="hidden" name="ministry" value="Ministry of Finance">
+                        <h5 class="card-title">Ministry of Finance</h5>
+                        <p class="card-text">It is a ministry within the Government of India concerned with the economy of India, serving as the Treasury of India.</p>
+                        <select name="sentiment" class="btn btn-dark">
+                            <option value="" disabled selected hidden>News Type</option>
+                            <option value="positive">Positive</option>
+                            <option value="negative">Negative</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                        <button type="submit" class="btn-arrow"><i class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Fourth Card -->
+        <div class="col-sm-6">
+            <form class="card-form" method="POST" action="{{ url_for('index') }}">
+                <div class="card fixed-height-card" style="width: 18rem;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Ministry_of_Education_India.svg" class="card-img-top" alt="..." style="border-radius: 15px; padding: 10px;">
+                    <div class="card-body">
+                        <input type="hidden" name="ministry" value="Ministry of Education">
+                        <h5 class="card-title">Ministry of Education</h5>
+                        <p class="card-text">It is a ministry of the Government of India, responsible for the implementation of the National Policy on Education.</p>
+                        <select name="sentiment" class="btn btn-dark">
+                            <option value="" disabled selected hidden>News Type</option>
+                            <option value="positive">Positive</option>
+                            <option value="negative">Negative</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                        <button type="submit" class="btn-arrow"><i class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Fifth Card -->
+        <div class="col-sm-6">
+            <form class="card-form" method="POST" action="{{ url_for('index') }}">
+                <div class="card fixed-height-card" style="width: 18rem;">
+                    <img src="https://www.newsonair.gov.in/writereaddata/News_Pictures/NAT/2022/Jul/NPIC-20227620155.jpg" class="card-img-top" alt="..." style="border-radius: 25px; padding: 5px;">
+                    <div class="card-body">
+                        <input type="hidden" name="ministry" value="Ministry of Environment, Forest and Climate change">
+                        <h5 class="card-title">Ministry of Environment, Forest and Climate change</h5>
+                        <p class="card-text">This ministry is responsible for planning, promoting, coordinating, and overseeing the implementation of environmental and forestry programmes.</p>
+                        <select name="sentiment" class="btn btn-dark">
+                            <option value="" disabled selected hidden>News Type</option>
+                            <option value="positive">Positive</option>
+                            <option value="negative">Negative</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                        <button type="submit" class="btn-arrow"><i class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Sixth Card -->
+        <div class="col-sm-6">
+            <form class="card-form" method="POST" action="{{ url_for('index') }}">
+                <div class="card fixed-height-card" style="width: 18rem;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Ministry_of_Road_Transport_and_Highways.svg" class="card-img-top" alt="..." style="border-radius: 25px; padding: 10px;">
+                    <div class="card-body">
+                        <input type="hidden" name="ministry" value="Ministry of Road Transport and Highways">
+                        <h5 class="card-title">Ministry of Road Transport and Highways</h5>
+                        <p class="card-text">This is the apex body for formulation and administration of the rules and laws relating to road transport, transport research to increase the mobility and efficiency of the road transport system.</p>
+                        <select name="sentiment" class="btn btn-dark">
+                            <option value="" disabled selected hidden>News Type</option>
+                            <option value="positive">Positive</option>
+                            <option value="negative">Negative</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                        <button type="submit" class="btn-arrow"><i class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
